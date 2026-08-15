@@ -18,12 +18,12 @@ class NameTypesTest(unittest.TestCase):
         self.assertFalse(report.behavior_checked)
 
     def test_name_rejects_a_decorative_wrong_type(self):
-        with self.assertRaisesRegex(NameTypeError, "says Image"):
+        with self.assertRaisesRegex(NameTypeError, "acts on Image"):
             check_signature("downsize_image", "Table", "Table", MODEL)
 
     def test_noun_type_is_checked_before_an_unknown_verb(self):
-        with self.assertRaisesRegex(NameTypeError, "says Image"):
-            check_signature("flarb_image", "Table", "Table", MODEL)
+        with self.assertRaisesRegex(NameTypeError, "acts on Image"):
+            check_signature("flarb_image", "Table", "Image", MODEL)
 
     def test_vector_resolves_photo_to_image(self):
         claim = infer_kind("photo", MODEL)
@@ -43,6 +43,7 @@ class NameTypesTest(unittest.TestCase):
         normalized = normalize_syntax(source)
         self.assertIn('function(x) { x <- 8 / 2; "← λ ÷"', normalized)
         self.assertIn("# ← λ ÷", normalized)
+        self.assertEqual(normalize_syntax("αλvalue ← λ(x) x"), "αλvalue <- function(x) x")
 
     def test_reader_rejects_a_second_function(self):
         source = (ROOT / "examples/downsize_image.irk").read_text(encoding="utf-8")

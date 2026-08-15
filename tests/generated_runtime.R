@@ -15,3 +15,7 @@ stopifnot(
 wrong_kind <- try(downsize_image(data.frame(x = 1L)), silent = TRUE)
 stopifnot(inherits(wrong_kind, "try-error"))
 
+forged <- irk_image(pixels)
+forged$width <- 6.9
+wrong_structure <- try(downsize_image(forged), silent = TRUE)
+stopifnot(inherits(wrong_structure, "try-error"))

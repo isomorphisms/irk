@@ -24,8 +24,11 @@ The first experiment accepts one typed, R-shaped function:
 downsize_image : Image → Image
 
 downsize_image ← λ(image) {
-    image$width  ← image$width  ÷ 2
-    image$height ← image$height ÷ 2
+    rows ← seq.int(1L, nrow(image$pixels), by = 2L)
+    columns ← seq.int(1L, ncol(image$pixels), by = 2L)
+    image$pixels ← image$pixels[rows, columns, drop = FALSE]
+    image$width ← ncol(image$pixels)
+    image$height ← nrow(image$pixels)
     image
 }
 ```

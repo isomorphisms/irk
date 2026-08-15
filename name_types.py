@@ -95,10 +95,10 @@ def check_signature(
         )
 
     actual = {"argument": input_kind, "result": output_kind}
-    if claim.kind not in actual.values():
+    if input_kind != claim.kind:
         raise NameTypeError(
-            f"{name} says {claim.kind}, but its signature is "
-            f"{input_kind} → {output_kind}"
+            f"{name} says it acts on {claim.kind}, but its argument is "
+            f"declared {input_kind}"
         )
 
     positions = OBJECT_FLOW.get(operation)

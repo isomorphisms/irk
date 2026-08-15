@@ -4,9 +4,13 @@ irk_kind_predicates <- list(
             is.list(value) &&
             is.matrix(value$pixels) &&
             is.numeric(value$width) && length(value$width) == 1L &&
+            !is.na(value$width) && is.finite(value$width) &&
+            value$width == floor(value$width) &&
             is.numeric(value$height) && length(value$height) == 1L &&
-            as.integer(value$width) == ncol(value$pixels) &&
-            as.integer(value$height) == nrow(value$pixels)
+            !is.na(value$height) && is.finite(value$height) &&
+            value$height == floor(value$height) &&
+            value$width == ncol(value$pixels) &&
+            value$height == nrow(value$pixels)
     },
     Table = function(value) is.data.frame(value) || is.matrix(value),
     Text = function(value) is.character(value),
